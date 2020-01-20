@@ -40,7 +40,7 @@ public class WeightPicker extends View
     }
 
     /**
-     * is called from onTouchEvent and draws a circle in the foreground accordingly
+     * draws a circle in the foreground according to  the _circle field variables
      * @param canvas the canvas wew use to draw
      */
     public void onDrawForeground (Canvas canvas)
@@ -75,7 +75,7 @@ public class WeightPicker extends View
     /**
      * takes touchscreen movement and draws a circle according to the touch
      * @param event the keytouchevent that occured
-     * @return
+     * @return wether the movement was dealt with accordingly
      */
     public boolean onTouchEvent(MotionEvent event)
     {
@@ -87,7 +87,7 @@ public class WeightPicker extends View
                 _circleCenterX = event.getX();
                 _circleCenterY = event.getY();
                 return true;
-            case (MotionEvent.ACTION_UP) : //otherwise we calculate the circle radius and update the view
+            case (MotionEvent.ACTION_UP) : //if the touch is released  we calculate the circle radius and update the view
                 _circleRadius = calculateRadius(event.getX(), event.getY());
                 invalidate();
                 return true;
