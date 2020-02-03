@@ -1,4 +1,4 @@
-package com.example.bartracker;
+package com.example.bartracker.JavaClasses;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -9,14 +9,17 @@ import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * view that holds a bitmap and displays it. Creates a circle on the image by tapping and dragging.
+ */
 public class WeightPicker extends View
 {
-    Bitmap _originalPicture; // the picture we want to choose where the weights are in
-    int _width;
-    int _height;
-    float _circleCenterX;
-    float _circleCenterY;
-    int _circleRadius;
+    private Bitmap _originalPicture; // the picture we want to choose where the weights are in
+    private int _width;
+    private int _height;
+    private float _circleCenterX;
+    private float _circleCenterY;
+    private int _circleRadius;
     /**
      * constructor that calls the view constructor
      * @param context the context we use it in
@@ -34,9 +37,13 @@ public class WeightPicker extends View
     protected void onDraw(Canvas canvas)
     {
         //first we want to get a resized version of our original bitmap, then we want to paint the whole bitMap to the View
-        Bitmap bitmap = Bitmap.createScaledBitmap(_originalPicture, _width, _height, true);
-        Rect viewBorder = new Rect(0, 0, _width, _height);
-        canvas.drawBitmap(bitmap, null, viewBorder, null);
+        //but only if the bitmap exists
+        if(_originalPicture != null)
+        {
+            Bitmap bitmap = Bitmap.createScaledBitmap(_originalPicture, _width, _height, true);
+            Rect viewBorder = new Rect(0, 0, _width, _height);
+            canvas.drawBitmap(bitmap, null, viewBorder, null);
+        }
     }
 
     /**
@@ -47,6 +54,8 @@ public class WeightPicker extends View
     {
         Paint paint = new Paint();
         paint.setARGB(255, 255, 255, 255);
+        paint.setStyle(Paint.Style.STROKE);
+        paint.setStrokeWidth(20);
         canvas.drawCircle(_circleCenterX, _circleCenterY, _circleRadius, paint);
     }
 
@@ -99,7 +108,7 @@ public class WeightPicker extends View
      * calculates the radius of the circle via pythagoras
      * @param endX the x coordinate of one border point
      * @param endY the y coordinate of one border point
-     * @return
+     * @return the new calculated radius
      */
     private int calculateRadius(float endX, float endY)
     {
@@ -109,5 +118,32 @@ public class WeightPicker extends View
         double heightDistance = Math.abs(_circleCenterY - endY);
         int radius = (int) Math.sqrt(widthDistance * widthDistance + heightDistance * heightDistance);
         return radius;
+    }
+
+    /**
+     * returns the x value of the circle middle
+     * @return the x value of the circle
+     */
+    public float getcircleX()
+    {
+        return  _circleCenterX;
+    }
+
+    /**
+     * returns the y value of the circle middle
+     * @return the y value of the circle
+     */
+    public float getcircleY()
+    {
+        return  _circleCenterY;
+    }
+
+    /**
+     * returns the radius of the circle
+     * @return the radius of the circle
+     */
+    public float getcircleRadius()
+    {
+        return  _circleRadius;
     }
 }
