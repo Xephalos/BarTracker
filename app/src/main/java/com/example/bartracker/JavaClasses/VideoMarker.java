@@ -33,9 +33,9 @@ public class VideoMarker
      * @param circleX the initial x position of the circle
      * @param circleY the initial y positon of the circle
      * @param radius the radius of the circle
-     * @return the newly marked video as an uri
+     * @return all the images from the original video marked in a list
      */
-    public Uri markLift(Uri video, float circleX, float circleY, float radius) throws IOException
+    public ArrayList<Bitmap> markLift(Uri video, float circleX, float circleY, float radius) throws IOException
     {
         //first we want to save the first circle and also get the radius as an int
         _circleX = circleX;
@@ -54,13 +54,13 @@ public class VideoMarker
         workFirstFrame(mediaMetadataRetriever);
         for(int counter = 1; counter < amountFrame; counter++)
         {
-            Bitmap frame = mediaMetadataRetriever.getFrameAtTime(0, MediaMetadataRetriever.OPTION_CLOSEST); //since the video is 60fps, there is a new frame every 0.016666 seconds so every 1666 mikroseconds
+            Bitmap frame = mediaMetadataRetriever.getFrameAtTime(counter*1666 , MediaMetadataRetriever.OPTION_CLOSEST); //since the video is 60fps, there is a new frame every 0.016666 seconds so every 1666 mikroseconds
             setNewCirclePositon(frame); // we need to use unedited bitmap in here so we calculate the video without the circle
             setColorAtCircle(frame);
             drawCircle(frame);
             _frameList.add(frame);
         }
-
+        return _frameList;
     }
 
 
@@ -213,10 +213,4 @@ public class VideoMarker
         canvas.drawCircle(_circleX, _circleY, _radius, paint);
     }
 
-    private Uri createVideo() throws IOException
-    {
-        File saveFile =;
-        SequenceEncoder sequenceEncoder = new SequenceEncoder();
-       //Todo sequenceEncoder.encode
-    }
 }

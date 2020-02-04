@@ -9,7 +9,7 @@ import com.example.bartracker.Activites.MainActivity;
 import com.example.bartracker.R;
 
 /**
- * this activtiy displays the anysed lift and other relevant data like velocity
+ * this activtiy displays the anyalsed lift and other relevant data like velocity
  */
 public class AnalysedLiftDisplayActivity extends AppCompatActivity
 {
